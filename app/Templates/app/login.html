@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Đăng ký / Đăng nhập</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat"
+      style="background-image: url('{% static 'app/images/fansipan.jpg' %}');">
+
+  <!-- Overlay làm dịu nền -->
+  <div class="absolute inset-0 bg-black/30"></div>
+
+  <!-- Khung đăng nhập kính mờ -->
+<div id="authBox"
+    class="relative w-full max-w-md p-8
+            rounded-2xl shadow-2xl
+            border border-white/40
+            backdrop-blur-xl
+            bg-cover bg-center
+            bg-white/20"
+    style="background-image: url('{% static 'app/images/ice-mountain.jpg' %}');">
+
+
+    <h2 id="formTitle"
+        class="text-2xl font-bold text-center mb-6 text-white drop-shadow">
+      Du Lịch Muôn Nơi
+    </h2>
+    <!-- Thông báo -->
+    <p id="message" class="text-center text-sm mb-4 text-white"></p>
+    <!-- Form -->
+    <form id="authForm" class="space-y-4">
+      <input id="name" type="text" placeholder="Họ và tên"
+        class="hidden w-full px-4 py-2 rounded-lg
+              bg-white/80 border border-white/50
+              focus:bg-white focus:outline-none focus:ring" />
+
+      <input id="email" type="email" placeholder="Email" required
+        class="w-full px-4 py-2 rounded-lg
+              bg-white/80 border border-white/50
+              focus:bg-white focus:outline-none focus:ring" />
+
+      <input id="password" type="password" placeholder="Mật khẩu" required
+        class="w-full px-4 py-2 rounded-lg
+              bg-white/80 border border-white/50
+              focus:bg-white focus:outline-none focus:ring" />
+
+      <input id="confirmPassword" type="password" placeholder="Nhập lại mật khẩu"
+        class="hidden w-full px-4 py-2 rounded-lg
+              bg-white/80 border border-white/50
+              focus:bg-white focus:outline-none focus:ring" />
+
+      <button type="submit"
+        class="w-full bg-indigo-600 hover:bg-indigo-700
+              text-white font-semibold py-2 rounded-lg transition">
+        Đăng nhập
+      </button>
+    </form>
+
+    <!-- Google -->
+    <div class="mt-4 flex justify-center">
+      <div id="g_id_onload"
+          data-client_id="YOUR_GOOGLE_CLIENT_ID"
+          data-callback="handleGoogleLogin"></div>
+
+      <div class="g_id_signin"
+          data-type="standard"
+          data-size="large"
+          data-theme="outline"></div>
+    </div>
+
+    <!-- Toggle -->
+    <p class="text-center text-sm mt-6 text-white">
+      <span id="toggleText">Chưa có tài khoản?</span>
+      <button id="toggleBtn" id="toggleBtn"
+              class="font-semibold underline ml-1">
+        Đăng ký
+      </button>
+    </p>
+  </div>
+
+<script>
+  const MODE = "{{ mode|default:'login' }}";
+</script>
+
+<script>
+  const formTitle = document.getElementById('formTitle');
+  const toggleBtn = document.getElementById('toggleBtn');
+  const toggleText = document.getElementById('toggleText');
+  const nameInput = document.getElementById('name');
+  const confirmPassword = document.getElementById('confirmPassword');
+  const message = document.getElementById('message');
+  const form = document.getElementById('authForm');
+  const authBox = document.getElementById('authBox');
+
+  let isLogin = MODE !== 'register';
+
+  function renderForm() {
+    if (isLogin) {
+      formTitle.textContent = 'Đăng nhập';
+      toggleText.textContent = 'Chưa có tài khoản?';
+      toggleBtn.textContent = 'Đăng ký';
+      nameInput.classList.add('hidden');
+      confirmPassword.classList.add('hidden');
+      form.querySelector('button').textContent = 'Đăng nhập';
+
+      authBox.style.backgroundImage =
+        "url({% static 'app/images/ice-mountain.jpg' %})";
+    } else {
+      formTitle.textContent = 'Đăng ký';
+      toggleText.textContent = 'Đã có tài khoản?';
+      toggleBtn.textContent = 'Đăng nhập';
+      nameInput.classList.remove('hidden');
+      confirmPassword.classList.remove('hidden');
+      form.querySelector('button').textContent = 'Đăng ký';
+
+      authBox.style.backgroundImage =
+        "url({% static 'app/images/ice-mountain.jpg' %})";
+    }
+  }
+
+  renderForm();
+
+
+  toggleBtn.onclick = () => {
+  if (isLogin) {
+    window.location.href = "{% url 'register' %}";
+  } else {
+    window.location.href = "{% url 'login' %}";
+  }
+};
+</script>
+
+</body>
+</html>
