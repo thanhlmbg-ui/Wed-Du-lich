@@ -1,0 +1,23 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Liên hệ{% endblock title %}
+
+{% block content_lienHe %}
+
+<section class="hero notice-hero">
+    <div class="hero-content">
+        <div class="notice-box">
+            <h2>🚧 Chức năng đang được cập nhật</h2>
+            <p>
+                Trang liên hệ hiện đang trong quá trình hoàn thiện.<br>
+                Vui lòng quay lại sau để trải nghiệm đầy đủ tính năng.
+            </p>
+            <a href="{% url 'home' %}" class="btn-home">
+                Quay về trang chủ
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock content_lienHe %}

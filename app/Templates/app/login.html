@@ -32,24 +32,35 @@
     </h2>
     <!-- Thông báo -->
     <p id="message" class="text-center text-sm mb-4 text-white"></p>
+    {% if error %}
+      <p class="text-center text-sm mb-4 text-white
+          {% if mode == 'login' %}
+            text-red-300
+          {% else %}
+            text-yellow-300
+          {% endif %}">
+        {{ error }}
+      </p>
+    {% endif %}
     <!-- Form -->
-    <form id="authForm" class="space-y-4">
-      <input id="name" type="text" placeholder="Họ và tên"
+    <form id="authForm" class="space-y-4" method="post">
+      {% csrf_token %}
+      <input id="name" name="name" type="text" placeholder="Họ và tên"
         class="hidden w-full px-4 py-2 rounded-lg
               bg-white/80 border border-white/50
               focus:bg-white focus:outline-none focus:ring" />
 
-      <input id="email" type="email" placeholder="Email" required
+      <input id="email" name="email" type="email" placeholder="Email" required
         class="w-full px-4 py-2 rounded-lg
               bg-white/80 border border-white/50
               focus:bg-white focus:outline-none focus:ring" />
 
-      <input id="password" type="password" placeholder="Mật khẩu" required
+      <input id="password" name="password" type="password" placeholder="Mật khẩu" required
         class="w-full px-4 py-2 rounded-lg
               bg-white/80 border border-white/50
               focus:bg-white focus:outline-none focus:ring" />
 
-      <input id="confirmPassword" type="password" placeholder="Nhập lại mật khẩu"
+      <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Nhập lại mật khẩu"
         class="hidden w-full px-4 py-2 rounded-lg
               bg-white/80 border border-white/50
               focus:bg-white focus:outline-none focus:ring" />
