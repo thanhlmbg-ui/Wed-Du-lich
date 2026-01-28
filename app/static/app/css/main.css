@@ -256,7 +256,9 @@ TRANG GIỚI THIỆU
     padding: 20px 0;
 }
 p {
-    text-indent: 1.5em;
-    line-height: 1.8;
     margin-bottom: 1rem;
+}
+.mo-ta {
+    text-indent: 1.5em;
+line-height: 1.8;
 }

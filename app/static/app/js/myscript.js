@@ -104,14 +104,28 @@ $('.minus-wishlist').click(function(){
         }
     })
 })
-function toggleMoTa(el) {
-    const moTa = el.previousElementSibling;
+
+
+
+console.log("myscript.js LOADED");
+
+window.toggleMoTa = function (btn) {
+    console.log("CLICK XEM THEM");
+
+    const moTa = btn.parentElement.querySelector('.mo-ta');
+
+    if (!moTa) {
+        console.error("KHONG TIM THAY .mo-ta");
+        return;
+    }
 
     if (moTa.classList.contains('text-collapse')) {
         moTa.classList.remove('text-collapse');
-        el.innerText = 'Thu gọn';
+        moTa.classList.add('text-expand');
+        btn.innerText = "Thu gọn";
     } else {
+        moTa.classList.remove('text-expand');
         moTa.classList.add('text-collapse');
-        el.innerText = 'Xem thêm';
+        btn.innerText = "Xem thêm";
     }
-}
+};

@@ -49,7 +49,7 @@
   </button>
 </div>
 {% endblock banner_slider %}
-{% block main-content %}
+{% block main_content %}
 <div class='row' style="width:100%">
   {% for  diendem in diemDuLich%}
     <div class='col-lg-4'>
@@ -58,14 +58,12 @@
             <h5><strong>{{diendem.ten}}</strong></h5>
             <hr>
             <!-- MÔ TẢ -->
-        <p class="mo-ta text-collapse">
-            {{ diendem.mo_ta }}
-        </p>
-
-        <!-- NÚT XEM THÊM -->
-        <span class="xem-them" onclick="toggleMoTa(this)">
-            Xem thêm
-        </span>
+            <p class="mo-ta text-collapse">
+              {{ diendem.mo_ta }}
+            </p>
+            
+            
+            <span class="xem-them" onclick="toggleMoTa(this)">Xem thêm</span>
             <!--<button class="btn btn-outline-secondary add-btn">Đặt dịch vụ</button>
             <a class="btn btn-outline-success" href="#">Xem</a>
             <h3 style="display: inline-block; float: right"><strong>{{diendem.gia_tham_khao}} VND</strong></h4>-->
@@ -76,4 +74,4 @@
     
 </div>
 <br/><br/><br/>
-{% endblock main-content %}
+{% endblock main_content %}
