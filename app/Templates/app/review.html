@@ -1,0 +1,35 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+<h2>⭐ Đánh giá & Bình luận</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label>Đánh giá (1-5 sao)</label>
+        {{ form.rating }}
+    </div>
+    <br>
+    <div>
+        <label>Bình luận</label>
+        {{ form.comment }}
+    </div>
+    <br>
+    <button type="submit">Gửi đánh giá</button>
+</form>
+
+<hr>
+
+<h3>Tất cả đánh giá</h3>
+{% for r in DanhGia %}
+    <div style="border-bottom:1px solid #ccc; margin-bottom:10px;">
+        <strong>{{ r.user.username }}</strong> - {{ r.rating }}⭐
+        <br>
+        <small>{{ r.created_at }}</small>
+        <p>{{ r.comment }}</p>
+    </div>
+{% empty %}
+    <p>Chưa có đánh giá nào.</p>
+{% endfor %}
+
+{% endblock %}

@@ -1,7 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
+from .models import *
+from .forms import DanhGiaForm
+
 from .models import *
 # Create your views here.
 
@@ -12,11 +16,13 @@ def home(request):
     return render(request,'app/home.html',context)
 
 def cart(request):
-    context={}
+    diemDuLich = DiemDuLich.objects.all()
+    context = {"diemDuLich": diemDuLich}
     return render(request,'app/cart.html',context)
 
 def checkout(request):
-    context={}
+    diemDuLich = DiemDuLich.objects.all()
+    context = {"diemDuLich": diemDuLich}
     return render(request,'app/checkout.html',context)
 
 def gioiThieu(request):
@@ -27,6 +33,45 @@ def chinhSach(request):
 
 def lienHe(request):
     return render(request, 'app/lienHe.html')
+
+def booking(request):
+    diemDuLich = DiemDuLich.objects.all()
+    context = {"diemDuLich": diemDuLich}
+    return render(request, 'app/booking.html', context)
+
+def chi_tiet_diem(request, id):
+    diem = get_object_or_404(DiemDuLich, id=id)
+    danh_gia_list = diem.danh_gia.all()
+
+    form = DanhGiaForm()
+
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return redirect('login')
+
+        form = DanhGiaForm(request.POST)
+        if form.is_valid():
+            # Chặn đánh giá trùng
+            da_danh_gia = DanhGia.objects.filter(
+                nguoi_dung=request.user,
+                diem_du_lich=diem
+            ).exists()
+
+            if not da_danh_gia:
+                danh_gia = form.save(commit=False)
+                danh_gia.nguoi_dung = request.user
+                danh_gia.diem_du_lich = diem
+                danh_gia.save()
+
+            return redirect('chitietdiem', id=id)
+
+    return render(request, 'app/chi_tiet_diem.html', {
+        'diem': diem,
+        'danh_gia_list': danh_gia_list,
+        'form': form
+    })
+
+
 # ======================
 # AUTH
 # ======================

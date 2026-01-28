@@ -59,11 +59,28 @@ class DatTour(models.Model):
     )
 #BẢNG ĐÁNH_GIÁ
 class DanhGia(models.Model):
-    SAO_CHOICES = [(i, str(i)) for i in range(1, 6)]
+    SAO_CHOICES = [(i, f"{i} sao") for i in range(1, 6)]
 
-    nguoi_dung = models.ForeignKey(User, on_delete=models.CASCADE)
-    diem_du_lich = models.ForeignKey(DiemDuLich, on_delete=models.CASCADE)
+    nguoi_dung = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='danh_gia'
+    )
+
+    diem_du_lich = models.ForeignKey(
+        DiemDuLich,
+        on_delete=models.CASCADE,
+        related_name='danh_gia'
+    )
 
     so_sao = models.IntegerField(choices=SAO_CHOICES)
     noi_dung_binh_luan = models.TextField()
-    ngay_danh_gia = models.DateField(auto_now_add=True)
+
+    ngay_danh_gia = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('nguoi_dung', 'diem_du_lich')
+        ordering = ['-ngay_danh_gia']
+
+    def __str__(self):
+        return f"{self.nguoi_dung.username} - {self.so_sao}⭐"

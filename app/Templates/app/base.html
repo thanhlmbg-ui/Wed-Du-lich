@@ -51,8 +51,9 @@
                         Dịch vụ
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Đặt phòng</a></li>
-                            <li><a class="dropdown-item" href="#">Đặt tour</a></li>
+                            <li><a class="dropdown-item" href="{% url 'datdichvu' %}">Đặt dịch vụ</a></li>
+                            <li><a class="dropdown-item" href="#">Bài viết</a></li>
+                            <li><a class="dropdown-item"  href="#">Báo cáo</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -71,26 +72,27 @@
                     </form>
             
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%url "cart" %}">Dịch vụ đã đặt</a>
+                    </li>
+                {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        user1
-                        </a>
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                {{ user.username }}
+                            </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">Trang cá nhân</a></li>
-                            <li><a class="dropdown-item" href="#">Bài viết</a></li>
-                            <li><a class="dropdown-item" href="#">Đặt phòng</a></li>
-                            <li><a class="dropdown-item" href="#">Thoát</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Đăng xuất</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{%url "cart" %}">Đặt dịch vụ</a>
-                    </li>
+                {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'login' %}">Đăng nhập</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'register' %}">Đăng ký</a>
                     </li>
+                {% endif %}
                 </ul>
             </div>
             </div>
@@ -104,6 +106,7 @@
         {% block content_gioithieu %}{% endblock content_gioithieu %}
         {% block content_chinhsach %}{% endblock content_chinhsach %}
         {% block content_lienHe %}{% endblock content_lienHe %}
+        {%block conten_booking%}{%endblock conten_booking%}
     </div>
     <!--chan trang-->
     <footer class="container-fluid bg-success text-center fixed-bottom p-2 mt-5">
