@@ -1,3 +1,4 @@
+<!--trang chủ-->
 {% extends 'app/base.html' %}
 {% load static %}
 
@@ -52,18 +53,18 @@
 {% endblock banner_slider %}
 {% block main_content %}
 <div class='row' style="width:100%">
-  {% for  diendem in diemDuLich%}
+  {% for  diendem in DiemDuLich%}
     <div class='col-lg-4'>
-        <img class="thumbnail" src="{{diendem.hinh_anhURL}}">
+        <img class="thumbnail" src="{{diendem.hinhAnhURL}}">
         <div class="box-element product">
             <h5><strong>{{diendem.ten}}</strong></h5>
             <hr>
             <!-- MÔ TẢ -->
-            <p class="mo-ta text-collapse">
-              {{ diendem.mo_ta }}
+            <p class="moTa text-collapse">
+              {{ diendem.moTa }}
             </p>
 
-            <span class="xem-them" onclick="toggleMoTa(this)">Xem thêm</span>
+            <span class="xemThem" onclick="toggleMoTa(this)">Xem thêm</span>
             <!--<button class="btn btn-outline-secondary add-btn">Đặt dịch vụ</button>
             <a class="btn btn-outline-success" href="#">Xem</a>
             <h3 style="display: inline-block; float: right"><strong>{{diendem.gia_tham_khao}} VND</strong></h4>-->

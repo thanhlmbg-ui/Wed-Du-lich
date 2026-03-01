@@ -10,38 +10,46 @@ from .models import *
 # Create your views here.
 
 User = get_user_model()
+#trang chủ
 def home(request):
     diemDuLich = DiemDuLich.objects.all()
     context={ 'diemDuLich': diemDuLich}
     return render(request,'app/home.html',context)
 
+#giỏ hàng
 def cart(request):
     diemDuLich = DiemDuLich.objects.all()
     context = {"diemDuLich": diemDuLich}
     return render(request,'app/cart.html',context)
 
+#thanh toán
 def checkout(request):
     diemDuLich = DiemDuLich.objects.all()
     context = {"diemDuLich": diemDuLich}
     return render(request,'app/checkout.html',context)
 
-def gioiThieu(request):
-    return render(request, 'app/gioiThieu.html')
+#giới thiệu
+def introduce(request):
+    return render(request, 'app/introduce.html')
 
-def chinhSach(request):
-    return render(request, 'app/chinhSach.html')
+#chính sách web
+def policy(request):
+    return render(request, 'app/policy.html')
 
-def lienHe(request):
-    return render(request, 'app/lienHe.html')
+#liên hệ
+def contact(request):
+    return render(request, 'app/contact.html')
 
+#đặt dịch vụ
 def booking(request):
     diemDuLich = DiemDuLich.objects.all()
     context = {"diemDuLich": diemDuLich}
     return render(request, 'app/booking.html', context)
 
-def chi_tiet_diem(request, id):
+#chi tiết điểm
+def detail(request, id):
     diem = get_object_or_404(DiemDuLich, id=id)
-    danh_gia_list = diem.danh_gia.all()
+    danhGiaList = diem.danhGia.all()
 
     form = DanhGiaForm()
 
@@ -59,15 +67,15 @@ def chi_tiet_diem(request, id):
 
             if not da_danh_gia:
                 danh_gia = form.save(commit=False)
-                danh_gia.nguoi_dung = request.user
-                danh_gia.diem_du_lich = diem
+                danh_gia.nguoiDung = request.user
+                danh_gia.diemDuLich = diem
                 danh_gia.save()
 
-            return redirect('chitietdiem', id=id)
+            return redirect('detail', id=id)
 
-    return render(request, 'app/chi_tiet_diem.html', {
+    return render(request, 'app/detail.html', {
         'diem': diem,
-        'danh_gia_list': danh_gia_list,
+        'danhGiaList': danhGiaList,
         'form': form
     })
 
@@ -75,7 +83,7 @@ def chi_tiet_diem(request, id):
 # ======================
 # AUTH
 # ======================
-
+#đăng nhập
 def login_view(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -100,7 +108,7 @@ def login_view(request):
         'mode': 'login'
     })
 
-
+#đăng ký
 def register_view(request):
     if request.method == 'POST':
         name = request.POST.get('name')

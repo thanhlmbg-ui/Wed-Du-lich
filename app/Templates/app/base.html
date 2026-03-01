@@ -1,9 +1,7 @@
+<!--trang cơ sở-->
 {% load static %}
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+
 <html>
     <head>
         <meta charset="utf-8">
@@ -51,19 +49,19 @@
                         Dịch vụ
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{% url 'datdichvu' %}">Đặt dịch vụ</a></li>
+                            <li><a class="dropdown-item" href="{% url 'datDichVu' %}">Đặt dịch vụ</a></li>
                             <li><a class="dropdown-item" href="#">Bài viết</a></li>
                             <li><a class="dropdown-item"  href="#">Báo cáo</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{%url "gioithieu" %}">Giới thiệu</a>
+                        <a class="nav-link" href="{%url "gioiThieu" %}">Giới thiệu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{%url "chinhsach" %}">Chính sách</a>
+                        <a class="nav-link" href="{%url "chinhSach" %}">Chính sách</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{%url "lienhe" %}">Liên hệ</a>
+                        <a class="nav-link" href="{%url "lienHe" %}">Liên hệ</a>
                     </li>
                 </ul>
                     <form class="d-flex" role="search">
@@ -73,7 +71,7 @@
             
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{%url "cart" %}">Dịch vụ đã đặt</a>
+                        <a class="nav-link" href="{%url "gioHang" %}">Dịch vụ đã đặt</a>
                     </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item dropdown">

@@ -10,45 +10,45 @@ class User(AbstractUser):
 #BẢNG ĐIỂM_DU_LỊCH
 class DiemDuLich(models.Model):
     ten = models.CharField(max_length=200)
-    mo_ta = models.TextField()
-    dia_chi = models.CharField(max_length=200)
-    gia_tham_khao = models.IntegerField()
-    hinh_anh = models.ImageField(null=True,blank=True)
-    ngay_tao = models.DateField(auto_now_add=True)
+    moTa = models.TextField()
+    diaChi = models.CharField(max_length=200)
+    giaThamKhao = models.IntegerField()
+    hinhAnh = models.ImageField(null=True,blank=True)
+    ngayTao = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.ten
     @property
-    def hinh_anhURL(self):
+    def hinhAnhURL(self):
         try:
-            url = self.hinh_anh.url
+            url = self.hinhAnh.url
         except:
             url = ''
         return url
 #BẢNG TOUR_DU_LỊCH
 class TourDuLich(models.Model):
-    ten_tour = models.CharField(max_length=200)
-    thoi_gian = models.IntegerField()
-    gia_tour = models.DecimalField(max_digits=10, decimal_places=2)
-    mo_ta = models.CharField(max_length=200, null=True, blank=True)
+    tenTour = models.CharField(max_length=200)
+    thoiGian = models.IntegerField()
+    giaTour = models.DecimalField(max_digits=10, decimal_places=2)
+    moTa = models.CharField(max_length=200, null=True, blank=True)
 
-    diem_du_lich = models.ForeignKey(
+    diemDuLich = models.ForeignKey(
         DiemDuLich,
         on_delete=models.CASCADE,
         related_name="tours"
     )
 
     def __str__(self):
-        return self.ten_tour
+        return self.tenTour
 #BẢNG ĐẶT_TOUR
 class DatTour(models.Model):
-    nguoi_dung = models.ForeignKey(User, on_delete=models.CASCADE)
+    nguoiDung = models.ForeignKey(User, on_delete=models.CASCADE)
     tour = models.ForeignKey(TourDuLich, on_delete=models.CASCADE)
 
-    ngay_dat = models.DateField(auto_now_add=True)
-    so_luong_nguoi = models.IntegerField()
+    ngayDat = models.DateField(auto_now_add=True)
+    soLuongNguoi = models.IntegerField()
 
-    trang_thai = models.CharField(
+    trangThai = models.CharField(
         max_length=20,
         choices=[
             ('cho', 'Chờ'),
@@ -59,28 +59,28 @@ class DatTour(models.Model):
     )
 #BẢNG ĐÁNH_GIÁ
 class DanhGia(models.Model):
-    SAO_CHOICES = [(i, f"{i} sao") for i in range(1, 6)]
+    sao = [(i, f"{i} sao") for i in range(1, 6)]
 
-    nguoi_dung = models.ForeignKey(
+    nguoiDung = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='danh_gia'
+        related_name='danhGia'
     )
 
-    diem_du_lich = models.ForeignKey(
+    diemDuLich = models.ForeignKey(
         DiemDuLich,
         on_delete=models.CASCADE,
-        related_name='danh_gia'
+        related_name='danhGia'
     )
 
-    so_sao = models.IntegerField(choices=SAO_CHOICES)
-    noi_dung_binh_luan = models.TextField()
+    soSao = models.IntegerField(choices=sao)
+    noiDungBinhLuan = models.TextField()
 
-    ngay_danh_gia = models.DateTimeField(auto_now_add=True)
-
+    ngayDanhGia = models.DateTimeField(auto_now_add=True)
+    
     class Meta:
-        unique_together = ('nguoi_dung', 'diem_du_lich')
-        ordering = ['-ngay_danh_gia']
+        unique_together = ('nguoiDung', 'diemDuLich')
+        ordering = ['-ngayDanhGia']
 
     def __str__(self):
-        return f"{self.nguoi_dung.username} - {self.so_sao}⭐"
+        return f"{self.nguoiDung.username} - {self.soSao}⭐"
