@@ -52,28 +52,32 @@
 
 {% endblock banner_slider %}
 {% block main_content %}
-<div class='row' style="width:100%">
-  {% for  diendem in DiemDuLich%}
-    <div class='col-lg-4'>
-        <img class="thumbnail" src="{{diendem.hinhAnhURL}}">
-        <div class="box-element product">
-            <h5><strong>{{diendem.ten}}</strong></h5>
-            <hr>
-            <!-- MÔ TẢ -->
-            <p class="moTa text-collapse">
-              {{ diendem.moTa }}
-            </p>
+<!--<div class='row' style="width:100%">-->
+<div class="row">
+{% for diendem in diemDuLich %}
+    <div class="col-lg-4 mb-4">
+        <div class="card h-100">
+            <img class="card-img-top thumbnail" src="{{ diendem.hinhAnhURL }}" alt="{{ diendem.ten }}">
 
-            <span class="xemThem" onclick="toggleMoTa(this)">Xem thêm</span>
-            <!--<button class="btn btn-outline-secondary add-btn">Đặt dịch vụ</button>
-            <a class="btn btn-outline-success" href="#">Xem</a>
-            <h3 style="display: inline-block; float: right"><strong>{{diendem.gia_tham_khao}} VND</strong></h4>-->
-            
+            <div class="card-body">
+                <h5 class="card-title"><strong>{{ diendem.ten }}</strong></h5>
+
+                <p class="moTa text-collapse">
+                    {{ diendem.moTa }}
+                </p>
+
+                <!--<span class="xemThem" onclick="toggleMoTa(this)">Xem thêm</span>-->
+
+                <div class="mt-2">
+                    <a class="btn btn-outline-primary btn-sm" href="#">Xem chi tiết</a>
+                    <a class="btn btn-outline-success btn-sm" href="#">Dịch vụ</a>
+                </div>
+            </div>
         </div>
     </div>
-    {% endfor %}
-    
+{% endfor %}
 </div>
+
 
 <br/><br/><br/>
 {% endblock main_content %}

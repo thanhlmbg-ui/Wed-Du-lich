@@ -262,3 +262,45 @@ p {
     text-indent: 1.5em;
 line-height: 1.8;
 }
+.thumbnail{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.card{
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.card img{
+    border-bottom:1px solid #ddd;
+}
+
+
+/* card */
+.card-dl{
+    border-radius:12px;
+    overflow:hidden;
+}
+
+/* ảnh */
+.img-dl{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+/* tiêu đề */
+.card-title{
+    font-size:22px;
+    margin-bottom:10px;
+}
+
+/* mô tả cố định chiều cao */
+.moTa{
+    font-size:15px;
+    color:#555;
+    height:50px;
+    overflow:hidden;
+}

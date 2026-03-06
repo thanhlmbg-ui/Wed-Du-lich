@@ -60,18 +60,18 @@ def detail(request, id):
         form = DanhGiaForm(request.POST)
         if form.is_valid():
             # Chặn đánh giá trùng
-            da_danh_gia = DanhGia.objects.filter(
-                nguoi_dung=request.user,
-                diem_du_lich=diem
+            daDanhGia = DanhGia.objects.filter(
+                nguoiDung=request.user,
+                diemDuLich=diem
             ).exists()
 
-            if not da_danh_gia:
-                danh_gia = form.save(commit=False)
-                danh_gia.nguoiDung = request.user
-                danh_gia.diemDuLich = diem
-                danh_gia.save()
+            if not daDanhGia:
+                danhGia = form.save(commit=False)
+                danhGia.nguoiDung = request.user
+                danhGia.diemDuLich = diem
+                danhGia.save()
 
-            return redirect('detail', id=id)
+            return redirect('chiTietDiem', id=id)
 
     return render(request, 'app/detail.html', {
         'diem': diem,

@@ -1,4 +1,3 @@
-<!--đặt hàng-->
 {% extends 'app/base.html' %}
 {% load static %}
 
@@ -6,24 +5,24 @@
 <h1>ĐIỂM DU LỊCH</h1>
 
 <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
-    {% for diemden in DiemDuLich %}
+    {% for diendem in diemDuLich %}
     <div style="border:1px solid #ccc; padding:10px; border-radius:6px;">
 
-        <img src="{{ diemden.hinhAnhURL }}"
+        <img src="{{ diendem.hinhAnhURL }}"
             style="width:100%; height:200px; object-fit:cover; border-radius:6px;">
 
         <h5 style="margin-top:10px;">
-            <strong>{{ diemden.ten }}</strong>
+            <strong>{{ diendem.ten }}</strong>
         </h5>
 
         <p class="mo-ta text-collapse">
-            {{ diemden.moTa }}
+            {{ diendem.mo_ta }}
         </p>
 
         <span class="xem-them" onclick="toggleMoTa(this)">Xem thêm</span>
         <br>
 
-        <a href="{% url 'chiTietDiem' diemDen.id %}">Xem chi tiết</a> |
+        <a href="{% url 'chiTietDiem' diendem.id %}">Xem chi tiết</a> |
         <a href="{% url 'gioHang' %}">Dịch vụ</a>
 
     </div>
