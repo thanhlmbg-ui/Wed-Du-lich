@@ -84,27 +84,3 @@ font-weight: bold;
 .goodnesssec a{
     text-decoration: none;
 }
-
-/* Trạng thái thu gọn: chỉ hiển thị 3 dòng */
-.text-collapse {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-}
-
-.text-expand {
-    display: block;
-    overflow: visible ;
-}
-
-.xem-them {
-    color: #198754;        /* màu chữ xanh lá (Bootstrap success green) */
-    cursor: pointer;       /* khi hover sẽ hiện con trỏ dạng bàn tay */
-    font-weight: 500;      /* độ đậm chữ trung bình */
-    text-decoration: none; /* bỏ gạch chân mặc định của link */
-}
-
-.xem-them:hover {
-    text-decoration: underline; /* khi rê chuột vào sẽ hiện gạch chân */
-}

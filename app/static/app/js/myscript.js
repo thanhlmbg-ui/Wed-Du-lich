@@ -109,23 +109,32 @@ $('.minus-wishlist').click(function(){
 
 console.log("myscript.js LOADED");
 
-window.toggleMoTa = function (btn) {
-    console.log("CLICK XEM THEM");
+window.addEventListener("DOMContentLoaded", function () {
 
-    const moTa = btn.parentElement.querySelector('.mo-ta');
+    document.querySelectorAll(".mo-ta").forEach(function(moTa){
 
-    if (!moTa) {
-        console.error("KHONG TIM THAY .mo-ta");
-        return;
-    }
+        const btn = moTa.parentElement.querySelector(".xem-them");
+        if(!btn) return;
 
-    if (moTa.classList.contains('text-collapse')) {
-        moTa.classList.remove('text-collapse');
-        moTa.classList.add('text-expand');
+        // nếu chiều cao thật = chiều cao hiển thị -> text không bị cắt
+        if(moTa.scrollHeight <= moTa.clientHeight + 1){
+            btn.style.display = "none";
+        }
+
+    });
+
+});
+
+window.toggleMoTa = function(btn){
+
+    const moTa = btn.parentElement.querySelector(".mo-ta");
+
+    if(moTa.classList.contains("text-collapse")){
+        moTa.classList.remove("text-collapse");
         btn.innerText = "Thu gọn";
-    } else {
-        moTa.classList.remove('text-expand');
-        moTa.classList.add('text-collapse');
+    }else{
+        moTa.classList.add("text-collapse");
         btn.innerText = "Xem thêm";
     }
+
 };

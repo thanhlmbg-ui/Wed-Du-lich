@@ -54,24 +54,23 @@
 {% block main_content %}
 <!--<div class='row' style="width:100%">-->
 <div class="row">
-{% for diendem in diemDuLich %}
+{% for diemden in diemDuLich %}
     <div class="col-lg-4 mb-4">
         <div class="card h-100">
-            <img class="card-img-top thumbnail" src="{{ diendem.hinhAnhURL }}" alt="{{ diendem.ten }}">
+            <img class="card-img-top thumbnail" src="{{ diemden.hinhAnhURL }}" alt="{{ diemden.ten }}">
 
             <div class="card-body">
-                <h5 class="card-title"><strong>{{ diendem.ten }}</strong></h5>
+                <h5 class="card-title"><strong> {{ diemden.ten }}</strong></h5>
 
-                <p class="moTa text-collapse">
-                    {{ diendem.moTa }}
+                <p class="card-text mo-ta text-collapse">
+                  {{ diemden.moTa }}
                 </p>
-
-                <!--<span class="xemThem" onclick="toggleMoTa(this)">Xem thêm</span>-->
-
-                <div class="mt-2">
-                    <a class="btn btn-outline-primary btn-sm" href="#">Xem chi tiết</a>
+                
+                <span class="xem-them" onclick="toggleMoTa(this)">Xem thêm</span>
+                <!--<div class="mt-2">
+                    <a class="btn btn-outline-primary btn-sm" href="{% url 'datDichVu' %}" >Xem chi tiết</a>
                     <a class="btn btn-outline-success btn-sm" href="#">Dịch vụ</a>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
