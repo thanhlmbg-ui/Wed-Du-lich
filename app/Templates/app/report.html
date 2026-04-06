@@ -1,0 +1,255 @@
+<!--Báo cáo thống kê-->
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Báo cáo thống kê{% endblock title %}
+
+{% block content_gioithieu %}
+<div class="page-wrapper">
+    <h1 class="text-center mb-4">Báo cáo thống kê</h1>
+
+    <!-- Tổng quan -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-center box-element">
+                <div class="card-body">
+                    <h5 class="card-title">Tổng điểm du lịch</h5>
+                    <h2 class="text-primary">{{ total_diem }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center box-element">
+                <div class="card-body">
+                    <h5 class="card-title">Tổng tour</h5>
+                    <h2 class="text-success">{{ total_tour }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center box-element">
+                <div class="card-body">
+                    <h5 class="card-title">Tổng đặt tour</h5>
+                    <h2 class="text-warning">{{ total_dat_tour }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center box-element">
+                <div class="card-body">
+                    <h5 class="card-title">Tổng đánh giá</h5>
+                    <h2 class="text-info">{{ total_danh_gia }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thống kê đặt chỗ theo tháng -->
+    <div class="card box-element mb-4">
+        <div class="card-header">
+            <h5>Thống kê đặt chỗ theo tháng</h5>
+        </div>
+        <div class="card-body">
+            <canvas id="datTourChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
+    <!-- Thống kê theo loại hình du lịch -->
+    <div class="card box-element mb-4">
+        <div class="card-header">
+            <h5>Thống kê đặt chỗ theo điểm du lịch</h5>
+        </div>
+        <div class="card-body">
+            <canvas id="diemChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
+    <!-- Điểm đến được đặt nhiều nhất -->
+    <div class="card box-element mb-4">
+        <div class="card-header">
+            <h5>Top 10 điểm đến được đặt nhiều nhất</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Điểm du lịch</th>
+                        <th>Số lượt đặt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in top_diem_dat %}
+                    <tr>
+                        <td>{{ item.tour__diemDuLich__ten }}</td>
+                        <td>{{ item.count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Điểm đến được đánh giá nhiều nhất -->
+    <div class="card box-element mb-4">
+        <div class="card-header">
+            <h5>Top 10 điểm đến được đánh giá nhiều nhất</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Điểm du lịch</th>
+                        <th>Số đánh giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in top_diem_danh_gia %}
+                    <tr>
+                        <td>{{ item.diemDuLich__ten }}</td>
+                        <td>{{ item.count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Tỷ lệ duyệt/từ chối -->
+    <div class="card box-element mb-4">
+        <div class="card-header">
+            <h5>Tỷ lệ xử lý yêu cầu đặt chỗ</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <h4 class="text-success">{{ approved_rate }}%</h4>
+                        <p>Được duyệt</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <h4 class="text-danger">{{ rejected_rate }}%</h4>
+                        <p>Bị từ chối</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <h4 class="text-warning">{{ pending_rate }}%</h4>
+                        <p>Đang chờ</p>
+                    </div>
+                </div>
+            </div>
+            <canvas id="trangThaiChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
+    <!-- Chi tiết điểm du lịch -->
+    <div class="card box-element mb-4">
+        <div class="card-header">
+            <h5>Chi tiết thống kê điểm du lịch</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Tên điểm</th>
+                        <th>Số đánh giá</th>
+                        <th>Điểm TB</th>
+                        <th>Số lượt đặt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stat in diem_stats %}
+                    <tr>
+                        <td>{{ stat.diem.ten }}</td>
+                        <td>{{ stat.danh_gia_count }}</td>
+                        <td>{{ stat.avg_rating }}</td>
+                        <td>{{ stat.dat_count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Chi tiết tour du lịch -->
+    <div class="card box-element mb-4">
+        <div class="card-header">
+            <h5>Chi tiết thống kê tour du lịch</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Tên tour</th>
+                        <th>Số lượt đặt</th>
+                        <th>Doanh thu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stat in tour_stats %}
+                    <tr>
+                        <td>{{ stat.tour.tenTour }}</td>
+                        <td>{{ stat.dat_tour_count }}</td>
+                        <td>{{ stat.total_revenue|floatformat:0 }} VND</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Biểu đồ đặt tour theo tháng
+    const ctx1 = document.getElementById('datTourChart').getContext('2d');
+    const datTourData = {{ dat_tour_by_month|safe }};
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: datTourData.map(item => item.month),
+            datasets: [{
+                label: 'Số lượt đặt',
+                data: datTourData.map(item => item.count),
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        }
+    });
+
+    // Biểu đồ theo điểm du lịch
+    const ctx2 = document.getElementById('diemChart').getContext('2d');
+    const diemData = {{ dat_tour_by_diem|safe }};
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: diemData.map(item => item.tour__diemDuLich__ten),
+            datasets: [{
+                label: 'Số lượt đặt',
+                data: diemData.map(item => item.count),
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            }]
+        }
+    });
+
+    // Biểu đồ trạng thái
+    const ctx3 = document.getElementById('trangThaiChart').getContext('2d');
+    const trangThaiData = {{ trang_thai_stats|safe }};
+    new Chart(ctx3, {
+        type: 'pie',
+        data: {
+            labels: trangThaiData.map(item => {
+                if (item.trangThai === 'cho') return 'Đang chờ';
+                if (item.trangThai === 'xac_nhan') return 'Đã duyệt';
+                return 'Đã hủy';
+            }),
+            datasets: [{
+                data: trangThaiData.map(item => item.count),
+                backgroundColor: ['#ffc107', '#28a745', '#dc3545']
+            }]
+        }
+    });
+</script>
+{% endblock %}

@@ -1,8 +1,9 @@
 from django.contrib import admin
 from .models import *
 
-admin.site.register(User)
-admin.site.register(DiemDuLich)
+admin.site.register(NguoiDung)
+admin.site.register(DanhMuc)
+admin.site.register(DiaDiem)
 admin.site.register(TourDuLich)
-admin.site.register(DatTour)
+admin.site.register(DatCho)
 admin.site.register(DanhGia)
