@@ -27,6 +27,7 @@ Dự án nhằm xây dựng một hệ thống website giới thiệu du lịch 
 
 ### Cài đặt python và Django
 pip install django
+
 pip install reportlab
 
 ### Tạo projiect Django
